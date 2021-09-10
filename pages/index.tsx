@@ -37,7 +37,7 @@ const IndexPage = ({ mythics, lastUpdate }: Props) => {
       <h1 className="text-lg md:text-3xl">Mythics</h1>
       <div className="text-center max-w-screen-md md:leading-loose">
         <p className="md:text-xl">
-          There are {mythics.length} bags for sale with Mythics. The floor
+          There are {mythics.length} bags for sale with 4 Mythics. The floor
           price is {mythics[0].price} ETH.
         </p>
         <p className="md:text-lg pt-2">
