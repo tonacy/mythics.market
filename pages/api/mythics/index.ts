@@ -4,9 +4,18 @@ import { chunk, flatten, orderBy } from 'lodash'
 import { utils as etherUtils, BigNumber } from 'ethers'
 import { rarityImage } from 'loot-rarity'
 import type { OpenseaResponse, Asset } from '../../../utils/openseaTypes'
+import Mythic5IDs from '../../../data/mythicFives-ids.json'
 import Mythic4IDs from '../../../data/mythicFours-ids.json'
+import Mythic3IDs from '../../../data/mythicThrees-ids.json'
+// import Mythic2IDs from '../../../data/mythicTwos-ids.json'
+// import Mythic1IDs from '../../../data/mythicOnes-ids.json'
 
-const chunked = chunk(Mythic4IDs, 20)
+const chunked5 = chunk(Mythic5IDs, 20)
+const chunked4 = chunk(Mythic4IDs, 20)
+const chunked3 = chunk(Mythic3IDs, 20)
+// const chunked2 = chunk(Mythic2IDs, 20)
+// const chunked1 = chunk(Mythic1IDs, 20)
+
 const apiKey = process.env.OPENSEA_API_KEY
 
 const fetchMythicPage = async (ids: string[]) => {
@@ -33,6 +42,10 @@ const fetchMythicPage = async (ids: string[]) => {
   )
 }
 
+interface Props {
+  num: number
+}
+
 export interface MythicInfo {
   id: string
   price: Number
@@ -40,8 +53,18 @@ export interface MythicInfo {
   svg: string
 }
 
-export const fetchMythics = async () => {
-  const data = await pMap(chunked, fetchMythicPage, { concurrency: 2 })
+function numMythics(x) {
+  if (x == 5) {
+    return chunked5;
+  } else if (x == 4) {
+    return chunked4;
+  } else {
+    return chunked3;
+  } 
+}
+
+export const fetchMythics = async (num) => {
+  const data = await pMap(numMythics(num), fetchMythicPage, { concurrency: 2 })
   const mapped = flatten(data)
     .filter(
       (a: Asset) =>
@@ -66,9 +89,9 @@ export const fetchMythics = async () => {
   }
 }
 
-const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (_req: NextApiRequest, res: NextApiResponse, { num }: Props) => {
   try {
-    const data = await fetchMythics()
+    const data = await fetchMythics(num)
     res.status(200).json(data)
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message })

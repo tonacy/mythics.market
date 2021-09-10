@@ -1,8 +1,8 @@
 import { MythicInfo, fetchMythics } from './api/mythics'
 import { format as ts } from 'timeago.js'
 
-export async function getStaticProps() {
-  const data = await fetchMythics()
+export async function getStaticProps(num) {
+  const data = await fetchMythics(num)
   return {
     props: {
       mythics: data.mythics,
@@ -41,7 +41,15 @@ const IndexPage = ({ mythics, lastUpdate }: Props) => {
           price is {mythics[0].price} ETH.
         </p>
         <p className="md:text-lg pt-2">
-          {/* Site by{' '}
+          Site by{' '}
+          <a
+            target="_blank"
+            href="https://twitter.com/tonylongname"
+            className="underline"
+          >
+            tonylongname
+          </a>
+          . Based off robes.market by {' '}
           <a
             target="_blank"
             href="https://twitter.com/worm_emoji"
@@ -49,14 +57,14 @@ const IndexPage = ({ mythics, lastUpdate }: Props) => {
           >
             worm_emoji
           </a>
-          . Join the{' '}
+          . Join the Mythic Guild{' '}
           <a
             target="_blank"
             className="underline"
-            href="https://divinerol.vercel.app"
+            href="https://discord.gg/HgXSVtfD"
           >
             Discord
-          </a> */}
+          </a>
           .
         </p>
         <p className="text-sm mv-4">Last updated {ts(lastUpdate)}</p>

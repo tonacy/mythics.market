@@ -21,7 +21,7 @@ function Mythics({ Component, pageProps }) {
           rel="stylesheet"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@worm_emoji" />
+        <meta name="twitter:creator" content="@tonylongname" />
         <meta property="og:url" content="https://mythics.market" />
         <meta property="og:title" content="mythics.market" />
         <link rel="icon" type="image/png" href="/favicon.png" />
