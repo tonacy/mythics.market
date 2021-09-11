@@ -1,21 +1,13 @@
 import { MythicInfo, fetchMythics } from './api/mythics'
 import { format as ts } from 'timeago.js'
+import React, { useCallback, useState } from "react"
 
-export async function getStaticProps(num) {
-  const data = await fetchMythics(num)
-  return {
-    props: {
-      mythics: data.mythics,
-      lastUpdate: data.lastUpdate,
-    },
-    revalidate: 300,
-  }
-}
 
-interface Props {
-  mythics: MythicInfo[]
-  lastUpdate: string
-}
+
+// interface Props {
+//   mythics: MythicInfo[]
+//   lastUpdate: string
+// }
 
 const Mythic = ({ mythic }: { mythic: MythicInfo }) => {
   return (
@@ -31,15 +23,38 @@ const Mythic = ({ mythic }: { mythic: MythicInfo }) => {
   )
 }
 
-const IndexPage = ({ mythics, lastUpdate }: Props) => {
+const IndexPage = () => {
+  const [mythics, setMythics] = useState([])
+  const [numMythics, setNumMythics] = useState('')
+  const [lastUpdate, setLastUpdate] = useState('')
+  
+  const selectNumMythics = useCallback(async (num) => {
+    const data = await fetchMythics(num)
+    setMythics(data.mythics)
+    setLastUpdate(data.lastUpdate)
+    setNumMythics(num)
+  }, [])
+
   return (
     <div className="py-3 md:pb-0 font-mono flex flex-col justify-center items-center gap-4 pt-10 md:w-screen">
       <h1 className="text-lg md:text-3xl">Mythics</h1>
       <div className="text-center max-w-screen-md md:leading-loose">
+      <p className="md:text-xl">
+        How many Mythics? 
+        &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(3) }> 3 </button>
+        &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(4) }> 4 </button>
+        &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(5) }> 5 </button>
+      </p>
+      { numMythics == '' ?
+        <p className="md:text-xl">Select number of Mythics</p> :
         <p className="md:text-xl">
-          There are {mythics.length} bags for sale with 3 Mythics. The floor
-          price is {mythics[0].price} ETH.
+          There are {mythics ? mythics.length : ''} bags for sale with {numMythics ? numMythics : ''} Mythics. The floor
+          price is {(mythics && mythics.length) ? mythics[0].price : '___'} ETH.
         </p>
+      }
         <p className="md:text-lg pt-2">
           Site by{' '}
           <a
@@ -70,10 +85,10 @@ const IndexPage = ({ mythics, lastUpdate }: Props) => {
         <p className="text-sm mv-4">Last updated {ts(lastUpdate)}</p>
       </div>
       <div className="grid md:grid-cols-2 pt-5">
-        {mythics.map((mythic) => {
-          return <Mythic mythic={mythic} key={mythic.id} />
-        })}
-      </div>
+          {mythics ? mythics.map((mythic) => {
+            return <Mythic mythic={mythic} key={mythic.id} />
+          }) : (numMythics ? 'No mythics found for <i>'+numMythics+'</i>' : '')}
+        </div>
     </div>
   )
 }
