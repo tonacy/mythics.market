@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css'
 import Head from 'next/head'
+
 function Mythics({ Component, pageProps }) {
   return (
     <>
