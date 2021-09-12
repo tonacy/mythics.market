@@ -7,14 +7,14 @@ import type { OpenseaResponse, Asset } from '../../../utils/openseaTypes'
 import Mythic5IDs from '../../../data/mythicFives-ids.json'
 import Mythic4IDs from '../../../data/mythicFours-ids.json'
 import Mythic3IDs from '../../../data/mythicThrees-ids.json'
-// import Mythic2IDs from '../../../data/mythicTwos-ids.json'
-// import Mythic1IDs from '../../../data/mythicOnes-ids.json'
+import Mythic2IDs from '../../../data/mythicTwos-ids.json'
+import Mythic1IDs from '../../../data/mythicOnes-ids.json'
 
 const chunked5 = chunk(Mythic5IDs, 20)
 const chunked4 = chunk(Mythic4IDs, 20)
 const chunked3 = chunk(Mythic3IDs, 20)
-// const chunked2 = chunk(Mythic2IDs, 20)
-// const chunked1 = chunk(Mythic1IDs, 20)
+const chunked2 = chunk(Mythic2IDs, 20)
+const chunked1 = chunk(Mythic1IDs, 20)
 
 const apiKey = process.env.OPENSEA_API_KEY
 
@@ -58,9 +58,13 @@ function numMythics(x) {
     return chunked5;
   } else if (x == 4) {
     return chunked4;
-  } else {
+  } else if (x == 3) {
     return chunked3;
-  } 
+  } else if (x == 2) {
+    return chunked2;
+  } else {
+    return chunked1;
+  }
 }
 
 export const fetchMythics = async (num) => {

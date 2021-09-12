@@ -42,6 +42,10 @@ const IndexPage = () => {
       <p className="md:text-xl">
         How many Mythics? 
         &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(1) }> 1 </button>
+        &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(2) }> 2 </button>
+        &nbsp;&nbsp;&nbsp;
         <button onClick={ () => selectNumMythics(3) }> 3 </button>
         &nbsp;&nbsp;&nbsp;
         <button onClick={ () => selectNumMythics(4) }> 4 </button>
