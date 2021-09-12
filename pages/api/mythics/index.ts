@@ -34,8 +34,8 @@ const fetchMythicPage = async (ids: string[]) => {
       return {
         ...asset,
         image_url: await rarityImage(asset.token_metadata, {
-          colorFn: ({ itemName }) =>
-            itemName.toLowerCase().includes('divine robe') && 'cyan',
+          // colorFn: ({ itemName }) =>
+          //   itemName.toLowerCase().includes('divine robe') && 'cyan',
         }),
       }
     }),

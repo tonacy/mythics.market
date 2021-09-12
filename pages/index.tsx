@@ -4,9 +4,20 @@ import React, { useCallback, useState } from "react"
 
 
 
+// export async function getStaticProps() {
+//   const data = await fetchMythics(4)
+//   return {
+//     props: {
+//       defaultMythics: data.mythics,
+//       defaultLastUpdate: data.lastUpdate,
+//     },
+//     revalidate: 300,
+//   }
+// }
+
 // interface Props {
-//   mythics: MythicInfo[]
-//   lastUpdate: string
+//   defaultMythics: MythicInfo[]
+//   defaultLastUpdate: string
 // }
 
 const Mythic = ({ mythic }: { mythic: MythicInfo }) => {
