@@ -41,8 +41,8 @@ const IndexPage = () => {
       <div className="text-center max-w-screen-md md:leading-loose">
       <p className="md:text-xl">
         How many Mythics? 
-        &nbsp;&nbsp;&nbsp;
-        <button onClick={ () => selectNumMythics(1) }> 1 </button>
+        {/* &nbsp;&nbsp;&nbsp;
+        <button onClick={ () => selectNumMythics(1) }> 1 </button> */}
         &nbsp;&nbsp;&nbsp;
         <button onClick={ () => selectNumMythics(2) }> 2 </button>
         &nbsp;&nbsp;&nbsp;
